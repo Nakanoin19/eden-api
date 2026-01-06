@@ -219,7 +219,7 @@ async fn main(mut req: Request, _env: Env, _ctx: Context) -> Result<Response> {
         cors_res.headers_mut().set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")?;
         cors_res.headers_mut().set("Access-Control-Allow-Headers", "Content-Type")?;
         cors_res.set_status(204);
-        return cors_res;
+        return Ok(cors_res);
     }
     let v: Vec<Cipher> = serde_json::from_str(&req.text().await.unwrap()).unwrap();
     let mut text = v[0].text.clone().unwrap_or("".to_string());
