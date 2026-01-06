@@ -213,6 +213,14 @@ const MORSE_INTERNATIONAL: [(char, &'static str); 72] = [
 ------------- */
 #[event(fetch)]
 async fn main(mut req: Request, _env: Env, _ctx: Context) -> Result<Response> {
+    if req.method() == Method::Options {
+        let mut cors_res = Response::ok("")?;
+        cors_res.headers_mut().set("Access-Control-Allow-Origin", "*")?;
+        cors_res.headers_mut().set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")?;
+        cors_res.headers_mut().set("Access-Control-Allow-Headers", "Content-Type")?;
+        cors_res.set_status(204);
+        return cors_res;
+    }
     let v: Vec<Cipher> = serde_json::from_str(&req.text().await.unwrap()).unwrap();
     let mut text = v[0].text.clone().unwrap_or("".to_string());
     for c in v.into_iter() {
