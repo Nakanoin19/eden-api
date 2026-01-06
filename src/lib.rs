@@ -217,7 +217,7 @@ async fn main(mut req: Request, _env: Env, _ctx: Context) -> Result<Response> {
         let mut cors_res_t = Response::ok("")?;
         cors_res_t.headers_mut().set("Access-Control-Allow-Origin", "*")?;
         cors_res_t.headers_mut().set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")?;
-        cors_res_t.headers_mut().set("Access-Control-Allow-Headers", "Content-Type")?;
+        cors_res_t.headers_mut().set("Access-Control-Allow-Headers", "*")?;
         let cors_res = cors_res_t.with_status(204);
         return Ok(cors_res);
     }
